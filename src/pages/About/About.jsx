@@ -44,19 +44,19 @@ const SOCIALS = [
 
 const MEGA_ITEMS = {
   cube: [
-    { icon:"🧩", label:"Cube Solver",      locked:false },
-    { icon:"⏱️", label:"Speed Timer",       locked:false },
-    { icon:"📖", label:"Algorithm Library", locked:true  },
+    { icon:"🧩", label:"Cube Solver",      locked:false, href:"/cube"  },
+    { icon:"⏱️", label:"Speed Timer",       locked:false, href:"/cube"  },
+    { icon:"📖", label:"Algorithm Library", locked:true,  href:"/cube"  },
   ],
   code: [
-    { icon:"💻", label:"Code Playground",  locked:false },
-    { icon:"🌐", label:"Web Dev Track",    locked:true  },
-    { icon:"⚛️", label:"React Course",     locked:true  },
+    { icon:"💻", label:"Code Playground",  locked:false, href:"/code"  },
+    { icon:"🌐", label:"Web Dev Track",    locked:true,  href:"/code"  },
+    { icon:"⚛️", label:"React Course",     locked:true,  href:"/code"  },
   ],
   chess: [
-    { icon:"♟️", label:"Chess Board",      locked:false },
-    { icon:"🧩", label:"Puzzle Trainer",   locked:false },
-    { icon:"📚", label:"Opening Explorer", locked:true  },
+    { icon:"♟️", label:"Chess Board",      locked:false, href:"/chess" },
+    { icon:"🧩", label:"Puzzle Trainer",   locked:false, href:"/chess" },
+    { icon:"📚", label:"Opening Explorer", locked:true,  href:"/chess" },
   ],
 };
 
@@ -64,26 +64,25 @@ const MEGA_ITEMS = {
    TEAM DATA
    ============================================================ */
 const TEAM = [
-    
-    {
-    name:    "Steve",
-    initial: "S",
-    role:    "Founder & CEO",
-    accent:  "accent-code",
-    color:   "#00C4D4",
-    bio:     "Full-stack developer with a love for clean code. Keeps the frontend running smooth and the data flowing fast.",
-    skills:  ["Node.js","Google Sheets API","Systems","Chess"],
-    emoji:   "💻",
-  },
   {
     name:    "Aadhidev",
     initial: "A",
-    role:    "Co-Founder & Idea dev",
+    role:    "Co-Founder & Lead Dev",
     accent:  "accent-cube",
     color:   "#FF5733",
     bio:     "The architect behind Cuchco. Passionate about speedcubing and building tools that make learning intuitive and fun.",
-    skills:  ["React","Algorithm Design","Idea Generation","Speedcubing"],
+    skills:  ["React","Algorithm Design","UI/UX","Speedcubing"],
     emoji:   "🧩",
+  },
+  {
+    name:    "Steve",
+    initial: "S",
+    role:    "Co-Founder & Backend",
+    accent:  "accent-code",
+    color:   "#00C4D4",
+    bio:     "Full-stack developer with a love for clean code. Keeps the backend running smooth and the data flowing fast.",
+    skills:  ["Node.js","Google Sheets API","Systems","Chess"],
+    emoji:   "💻",
   },
   {
     name:    "Abel",
@@ -92,7 +91,7 @@ const TEAM = [
     accent:  "accent-chess",
     color:   "#B882FF",
     bio:     "Design thinker and chess strategist. Brings the visual language and user experience that makes Cuchco feel alive.",
-    skills:  ["Design","Idea","Branding","Chess Strategy"],
+    skills:  ["Design","CSS","Branding","Chess Strategy"],
     emoji:   "♟️",
   },
 ];
@@ -216,7 +215,11 @@ export default function About() {
                 </div>
                 <div className="mega-links">
                   {MEGA_ITEMS[cat].map(item => (
-                    <a key={item.label} href="#" className="mega-link" onClick={e => e.preventDefault()}>
+                    <a key={item.label}
+                      href={item.locked && !user ? undefined : item.href}
+                      className="mega-link"
+                      onClick={() => setDropdown(null)}
+                    >
                       <span className="mega-link-icon">{item.icon}</span>
                       <div className="mega-link-text"><strong>{item.label}</strong></div>
                       {item.locked && !user && <span className="mega-lock">🔒</span>}
@@ -427,10 +430,10 @@ export default function About() {
           <div className="footer-col">
             <h4>Platform</h4>
             <ul>
-              <li><a href="#">Cube Solver</a></li>
-              <li><a href="#">Code Playground</a></li>
-              <li><a href="#">Chess Board</a></li>
-              <li><a href="#">Speed Timer</a></li>
+              <li><a href="/cube">Cube Solver</a></li>
+              <li><a href="/code">Code Playground</a></li>
+              <li><a href="/chess">Chess Board</a></li>
+              <li><a href="/cube">Speed Timer</a></li>
             </ul>
           </div>
         </div>

@@ -59,25 +59,25 @@ const LESSONS = [
 
 const MEGA_ITEMS = {
   cube: [
-    { icon:"🧩", label:"Cube Solver",      desc:"Interactive 3D solver & visualizer",  locked:false },
-    { icon:"⏱️", label:"Speed Timer",       desc:"WCA-style solve timer with stats",    locked:false },
-    { icon:"📖", label:"Algorithm Library", desc:"OLL, PLL, F2L algorithm reference",   locked:true  },
-    { icon:"🏆", label:"Beginner Course",   desc:"Layer-by-layer full video course",    locked:true  },
-    { icon:"🚀", label:"CFOP Full Course",  desc:"Advanced speedcubing method",         locked:true  },
+    { icon:"🧩", label:"Cube Solver",      desc:"Interactive 3D solver & visualizer",  locked:false, href:"/cube"  },
+    { icon:"⏱️", label:"Speed Timer",       desc:"WCA-style solve timer with stats",    locked:false, href:"/cube"  },
+    { icon:"📖", label:"Algorithm Library", desc:"OLL, PLL, F2L algorithm reference",   locked:true,  href:"/cube"  },
+    { icon:"🏆", label:"Beginner Course",   desc:"Layer-by-layer full video course",    locked:true,  href:"/cube"  },
+    { icon:"🚀", label:"CFOP Full Course",  desc:"Advanced speedcubing method",         locked:true,  href:"/cube"  },
   ],
   code: [
-    { icon:"💻", label:"Code Playground",  desc:"Live HTML/CSS/JS editor in browser",  locked:false },
-    { icon:"🌐", label:"Web Dev Track",    desc:"HTML → CSS → JS → React roadmap",     locked:true  },
-    { icon:"🐍", label:"Python Basics",    desc:"Beginner-friendly Python course",     locked:true  },
-    { icon:"⚛️", label:"React Course",     desc:"Component-based UI development",      locked:true  },
-    { icon:"🛠️", label:"Project Builder",  desc:"Build real apps step by step",        locked:true  },
+    { icon:"💻", label:"Code Playground",  desc:"Live HTML/CSS/JS editor in browser",  locked:false, href:"/code"  },
+    { icon:"🌐", label:"Web Dev Track",    desc:"HTML → CSS → JS → React roadmap",     locked:true,  href:"/code"  },
+    { icon:"🐍", label:"Python Basics",    desc:"Beginner-friendly Python course",     locked:true,  href:"/code"  },
+    { icon:"⚛️", label:"React Course",     desc:"Component-based UI development",      locked:true,  href:"/code"  },
+    { icon:"🛠️", label:"Project Builder",  desc:"Build real apps step by step",        locked:true,  href:"/code"  },
   ],
   chess: [
-    { icon:"♟️", label:"Chess Board",      desc:"Play & analyze games interactively",  locked:false },
-    { icon:"🧩", label:"Puzzle Trainer",   desc:"Daily tactics & pattern recognition", locked:false },
-    { icon:"📚", label:"Opening Explorer", desc:"Browse and study chess openings",     locked:true  },
-    { icon:"📊", label:"Game Analysis",    desc:"Review your games with engine hints", locked:true  },
-    { icon:"🎓", label:"Endgame Studies",  desc:"Master king & pawn endgame theory",   locked:true  },
+    { icon:"♟️", label:"Chess Board",      desc:"Play & analyze games interactively",  locked:false, href:"/chess" },
+    { icon:"🧩", label:"Puzzle Trainer",   desc:"Daily tactics & pattern recognition", locked:false, href:"/chess" },
+    { icon:"📚", label:"Opening Explorer", desc:"Browse and study chess openings",     locked:true,  href:"/chess" },
+    { icon:"📊", label:"Game Analysis",    desc:"Review your games with engine hints", locked:true,  href:"/chess" },
+    { icon:"🎓", label:"Endgame Studies",  desc:"Master king & pawn endgame theory",   locked:true,  href:"/chess" },
   ],
 };
 
@@ -339,7 +339,7 @@ export default function Home() {
           </div>
 
           <div className="nav-item">
-            <a href="/about" className="nav-link" onClick={() => setDropdown(null)}>About</a>
+            <a href="#about" className="nav-link" onClick={() => setDropdown(null)}>About</a>
           </div>
         </div>
 
@@ -402,14 +402,13 @@ export default function Home() {
                 </div>
                 <div className="mega-links">
                   {MEGA_ITEMS[cat].map(item => (
-                    <a
+                    <button
                       key={item.label}
-                      href="#"
                       className="mega-link"
-                      onClick={e => {
-                        e.preventDefault();
+                      onClick={() => {
                         setDropdown(null);
                         if (item.locked) requireAuth(() => {});
+                        else if (item.href) window.location.href = item.href;
                       }}
                     >
                       <span className="mega-link-icon">{item.icon}</span>
@@ -418,7 +417,7 @@ export default function Home() {
                         <span>{item.desc}</span>
                       </div>
                       {item.locked && !user && <span className="mega-lock">🔒</span>}
-                    </a>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -432,16 +431,16 @@ export default function Home() {
         <div className="mobile-menu-section">
           <h4>Free Tools</h4>
           {["Cube Solver","Speed Timer","Chess Board","Code Playground"].map(l => (
-            <a key={l} href="#" className="mobile-menu-link" onClick={() => setMobileOpen(false)}>{l}</a>
+            <button key={l} className="mobile-menu-link" onClick={() => setMobileOpen(false)}>{l}</button>
           ))}
         </div>
         <div className="mobile-menu-section">
           <h4>Requires Login</h4>
           {["Lessons","Community","Full Courses","Game Analysis"].map(l => (
-            <a key={l} href="#" className="mobile-menu-link"
-              onClick={e => { e.preventDefault(); setMobileOpen(false); requireAuth(() => {}); }}>
+            <button key={l} className="mobile-menu-link"
+              onClick={() => { setMobileOpen(false); requireAuth(() => {}); }}>
               🔒 {l}
-            </a>
+            </button>
           ))}
         </div>
         <div className="mobile-auth-row">
@@ -530,8 +529,9 @@ export default function Home() {
               <p className="learn-card-desc">{card.desc}</p>
               <div className="learn-tools">
                 {MEGA_ITEMS[card.key].map(t => (
-                  <a key={t.label} href="#" className="learn-tool"
-                    onClick={e => { e.preventDefault(); if (t.locked) requireAuth(() => {}); }}>
+                  <a key={t.label} href={t.locked && !user ? undefined : t.href}
+                    className="learn-tool"
+                    onClick={e => { if (t.locked && !user) { e.preventDefault(); requireAuth(() => {}); } }}>
                     <span className="learn-tool-icon">{t.icon}</span>
                     {t.label}
                     {t.locked && !user && <span className="lock">🔒</span>}
@@ -625,19 +625,19 @@ export default function Home() {
           <div className="footer-col">
             <h4>Learn</h4>
             <ul>
-              <li><a href="#">Cube Solver</a></li>
-              <li><a href="#">Speed Timer</a></li>
-              <li><a href="#">Chess Board</a></li>
-              <li><a href="#">Code Playground</a></li>
+              <li><a href="/cube">Cube Solver</a></li>
+              <li><a href="/cube">Speed Timer</a></li>
+              <li><a href="/chess">Chess Board</a></li>
+              <li><a href="/code">Code Playground</a></li>
             </ul>
           </div>
           <div className="footer-col">
             <h4>Platform</h4>
             <ul>
-              <li><a href="#">All Lessons</a></li>
-              <li><a href="#">Progress Tracker</a></li>
+              <li><a href="/#lessons">All Lessons</a></li>
+              <li><a href="/#lessons">Progress Tracker</a></li>
               <li><a href="/community">Community</a></li>
-              <li><a href="#">About Cuchco</a></li>
+              <li><a href="/about">About Cuchco</a></li>
             </ul>
           </div>
         </div>
