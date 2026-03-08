@@ -103,7 +103,7 @@ export default function About() {
   const [user,       setUser]       = useState(() => loadSession());
   const [dropdown,   setDropdown]   = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [authOpen,   setAuthOpen]   = useState(false);
+//   const [authOpen,   setAuthOpen]   = useState(false);
   const navRef = useRef(null);
 
   // ── Theme ──────────────────────────────────────────────
