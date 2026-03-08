@@ -1,0 +1,521 @@
+/* ============================================================
+   CUCHCO — About.css
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+/* ── reuse root variables from Home.css ── */
+
+/* ============================================================
+   PAGE WRAPPER
+   ============================================================ */
+.about-page {
+  min-height: 100vh;
+  background: var(--bg);
+  padding-top: 64px;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   HERO — animated background
+   ============================================================ */
+.about-hero {
+  position: relative;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 48px 60px;
+  overflow: hidden;
+}
+
+/* Grid background */
+.about-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,209,0,0.07) 0%, transparent 65%),
+    repeating-linear-gradient(0deg,   transparent, transparent 70px, rgba(255,209,0,0.025) 70px, rgba(255,209,0,0.025) 71px),
+    repeating-linear-gradient(90deg,  transparent, transparent 70px, rgba(255,209,0,0.025) 70px, rgba(255,209,0,0.025) 71px);
+  z-index: 0;
+}
+
+/* Floating orbs */
+.about-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+}
+.about-orb-1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,87,51,0.09) 0%, transparent 70%);
+  top: -200px; left: -200px;
+  animation: aboutFloat 14s ease-in-out infinite;
+}
+.about-orb-2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,196,212,0.08) 0%, transparent 70%);
+  bottom: -100px; right: -150px;
+  animation: aboutFloat 18s ease-in-out infinite reverse;
+}
+.about-orb-3 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(184,130,255,0.07) 0%, transparent 70%);
+  top: 30%; left: 55%;
+  animation: aboutFloat 11s ease-in-out infinite 2s;
+}
+
+.about-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Eyebrow tag */
+.about-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--yellow);
+  border: 1px solid rgba(255,209,0,0.25);
+  padding: 7px 20px;
+  margin-bottom: 36px;
+  animation: fadeUp 0.6s ease both;
+}
+.about-eyebrow-dot {
+  width: 6px; height: 6px;
+  background: var(--yellow);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+/* Giant title */
+.about-hero-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 14vw, 13rem);
+  line-height: 0.88;
+  letter-spacing: -2px;
+  color: var(--text);
+  animation: fadeUp 0.7s 0.1s ease both;
+}
+.about-hero-title .yellow { color: var(--yellow); }
+
+/* Paragraph */
+.about-hero-para {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: var(--text2);
+  max-width: 520px;
+  line-height: 1.8;
+  margin: 32px auto 0;
+  animation: fadeUp 0.7s 0.2s ease both;
+}
+.about-hero-para strong { color: var(--text); font-weight: 700; }
+
+/* Scroll indicator */
+.about-scroll {
+  position: absolute;
+  bottom: 36px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0.4; animation: fadeUp 1s 0.8s ease both;
+}
+.about-scroll p {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text2);
+}
+.about-scroll-line {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, var(--yellow), transparent);
+  animation: scrollPulse 2s infinite;
+}
+
+/* ============================================================
+   STATS STRIP
+   ============================================================ */
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.about-stat {
+  padding: 52px 28px;
+  text-align: center;
+  border-right: 1px solid var(--border2);
+  position: relative;
+  overflow: hidden;
+}
+.about-stat:last-child { border-right: none; }
+.about-stat::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--yellow);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+.about-stat:hover::before { transform: scaleX(1); }
+.about-stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 4rem; letter-spacing: 2px;
+  color: var(--yellow); line-height: 1;
+  transition: color 0.3s;
+}
+.about-stat-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--text2);
+  margin-top: 8px;
+}
+
+/* ============================================================
+   MISSION SECTION
+   ============================================================ */
+.about-mission {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  align-items: center;
+}
+.about-mission-left .section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--yellow); margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.about-mission-left .section-label::before {
+  content: ''; width: 28px; height: 1px; background: var(--yellow);
+}
+.about-mission-left h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 1; letter-spacing: 1px;
+  color: var(--text);
+}
+.about-mission-right p {
+  font-size: 1.05rem; color: var(--text2);
+  line-height: 1.85; margin-bottom: 20px;
+}
+.about-mission-right p:last-child { margin-bottom: 0; }
+.about-mission-right strong { color: var(--text); }
+
+/* Three discipline badges */
+.about-badges {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px;
+}
+.about-badge {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem; letter-spacing: 1px;
+  color: var(--text2); border-radius: 2px;
+  transition: all 0.2s;
+}
+.about-badge:hover { border-color: var(--yellow); color: var(--yellow); transform: translateY(-2px); }
+.about-badge span { font-size: 1.1rem; }
+
+/* ============================================================
+   TEAM SECTION
+   ============================================================ */
+.about-team {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 100px 48px;
+}
+.about-team-header {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 72px;
+}
+.about-team-header .section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--yellow); margin-bottom: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 12px;
+}
+.about-team-header .section-label::before,
+.about-team-header .section-label::after {
+  content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--yellow);
+}
+.about-team-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 1; letter-spacing: 1px; color: var(--text);
+  margin-bottom: 16px;
+}
+.about-team-header p {
+  font-size: 0.92rem; color: var(--text2); line-height: 1.7;
+}
+
+/* Team cards grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Individual team card */
+.team-card {
+  background: var(--bg);
+  padding: 52px 36px 44px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center;
+  position: relative; overflow: hidden;
+  transition: background 0.25s;
+}
+.team-card:hover { background: var(--surface2); }
+
+/* Top accent bar — each card gets a color */
+.team-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  transition: opacity 0.25s;
+  opacity: 0.6;
+}
+.team-card:hover::before { opacity: 1; }
+.team-card.accent-cube::before  { background: var(--accent-cube); }
+.team-card.accent-code::before  { background: var(--accent-code); }
+.team-card.accent-chess::before { background: var(--accent-chess); }
+
+/* Avatar circle */
+.team-avatar-wrap {
+  position: relative;
+  margin-bottom: 28px;
+}
+.team-avatar {
+  width: 110px; height: 110px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem; letter-spacing: 2px;
+  color: #0A0A0A;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+.team-card:hover .team-avatar { transform: scale(1.06); }
+
+.team-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover; border-radius: 50%;
+}
+
+/* Rotating ring around avatar */
+.team-avatar-ring {
+  position: absolute;
+  top: -6px; left: -6px; right: -6px; bottom: -6px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255,209,0,0.25);
+  animation: ringRotate 12s linear infinite;
+}
+.team-card:hover .team-avatar-ring {
+  border-color: rgba(255,209,0,0.6);
+  animation-duration: 4s;
+}
+
+/* Avatar colors per card */
+.team-card.accent-cube  .team-avatar { background: linear-gradient(135deg, #FF5733, #ff7a5a); }
+.team-card.accent-code  .team-avatar { background: linear-gradient(135deg, #00C4D4, #00e5f8); }
+.team-card.accent-chess .team-avatar { background: linear-gradient(135deg, #B882FF, #d4a8ff); }
+
+/* Number badge */
+.team-num {
+  position: absolute;
+  bottom: -4px; right: -4px;
+  width: 28px; height: 28px;
+  background: var(--yellow);
+  color: #0A0A0A;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem; z-index: 2;
+  border: 2px solid var(--bg);
+}
+
+/* Name */
+.team-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem; letter-spacing: 3px;
+  color: var(--text); margin-bottom: 6px;
+  transition: color 0.2s;
+}
+.team-card:hover .team-name { color: var(--yellow); }
+
+/* Role */
+.team-role {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 18px; padding: 4px 12px;
+  border-radius: 2px;
+}
+.accent-cube  .team-role { color: var(--accent-cube);  background: rgba(255,87,51,0.1); }
+.accent-code  .team-role { color: var(--accent-code);  background: rgba(0,196,212,0.1); }
+.accent-chess .team-role { color: var(--accent-chess); background: rgba(184,130,255,0.1); }
+
+/* Bio */
+.team-bio {
+  font-size: 0.84rem; color: var(--text2);
+  line-height: 1.7; margin-bottom: 24px;
+}
+
+/* Skill tags */
+.team-skills {
+  display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+}
+.team-skill {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem; letter-spacing: 1px;
+  padding: 4px 10px; border: 1px solid var(--border2);
+  color: var(--text3); border-radius: 2px;
+  transition: all 0.18s;
+}
+.team-card:hover .team-skill { border-color: var(--border); color: var(--text2); }
+
+/* ============================================================
+   VALUES SECTION
+   ============================================================ */
+.about-values {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 100px 48px;
+}
+.about-values-header {
+  margin-bottom: 56px;
+}
+.about-values-header .section-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--yellow); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.about-values-header .section-label::before {
+  content: ''; width: 28px; height: 1px; background: var(--yellow);
+}
+.about-values-header h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.8rem, 5vw, 4.5rem);
+  line-height: 1; color: var(--text);
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px; background: var(--border);
+  border: 1px solid var(--border);
+}
+.value-card {
+  background: var(--surface);
+  padding: 40px 32px;
+  transition: background 0.2s;
+}
+.value-card:hover { background: var(--surface2); }
+.value-icon {
+  font-size: 2.2rem; margin-bottom: 18px;
+  display: block;
+}
+.value-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.6rem; letter-spacing: 2px;
+  color: var(--yellow); margin-bottom: 10px;
+}
+.value-desc {
+  font-size: 0.86rem; color: var(--text2); line-height: 1.7;
+}
+
+/* ============================================================
+   CTA BANNER
+   ============================================================ */
+.about-cta {
+  background: var(--yellow);
+  padding: 100px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.about-cta::before {
+  content: 'CUCHCO';
+  position: absolute;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22vw;
+  color: rgba(0,0,0,0.04);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  pointer-events: none;
+  letter-spacing: -4px;
+}
+.about-cta h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 6vw, 6rem);
+  letter-spacing: 2px; line-height: 1;
+  color: #0A0A0A; margin-bottom: 16px;
+  position: relative; z-index: 1;
+}
+.about-cta p {
+  font-size: 0.98rem; color: rgba(0,0,0,0.58);
+  max-width: 400px; margin: 0 auto 36px;
+  line-height: 1.7; position: relative; z-index: 1;
+}
+.about-cta .btn-dark {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  padding: 16px 44px; background: #0A0A0A; color: var(--yellow);
+  border: none; cursor: pointer; transition: all 0.2s;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  position: relative; z-index: 1;
+}
+.about-cta .btn-dark:hover { background: #1C1C1C; transform: translateY(-2px); }
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeUp    { from { opacity:0; transform:translateY(22px) } to { opacity:1; transform:translateY(0) } }
+@keyframes pulse     { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.4)} }
+@keyframes aboutFloat { 0%,100%{transform:translate(0,0)} 33%{transform:translate(25px,-18px)} 66%{transform:translate(-18px,14px)} }
+@keyframes scrollPulse { 0%,100%{opacity:0.4} 50%{opacity:1} }
+@keyframes ringRotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  .about-hero        { padding: 60px 20px 50px; min-height: 70vh; }
+  .about-stats       { grid-template-columns: repeat(3, 1fr); }
+  .about-stat        { padding: 36px 16px; }
+  .about-stat-num    { font-size: 2.8rem; }
+  .about-mission     { grid-template-columns: 1fr; gap: 40px; padding: 60px 20px; }
+  .about-team        { padding: 60px 20px; }
+  .team-grid         { grid-template-columns: 1fr; max-width: 420px; }
+  .values-grid       { grid-template-columns: 1fr; }
+  .about-values      { padding: 60px 20px; }
+  .about-cta         { padding: 64px 20px; }
+}
+
+@media (max-width: 480px) {
+  .about-stats { grid-template-columns: 1fr; }
+  .about-stat  { border-right: none; border-bottom: 1px solid var(--border2); }
+  .about-stat:last-child { border-bottom: none; }
+  .team-avatar { width: 90px; height: 90px; font-size: 2.4rem; }
+}
