@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import "./Codeeditor.css";
+import "./CodeEditor.css";
 
 /* ============================================================
    STARTER TEMPLATES
@@ -242,7 +242,8 @@ try { ${c.js} } catch(e){ console.error(e); }
     return () => clearTimeout(t);
   }, [code, autoRun, runPreview]);
 
-  // Initial run
+  // Initial run — eslint-disable-next-line is intentional: we only want this once on mount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { runPreview(); }, []);
 
   const handleCodeChange = (e) => {
