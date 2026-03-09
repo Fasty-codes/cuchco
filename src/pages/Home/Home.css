@@ -183,6 +183,18 @@ body {
 .mega-dropdown.open {
   opacity: 1; transform: translateY(0); pointer-events: all;
 }
+/* Slim mega dropdown — no left panel, just 3 cols */
+.mega-inner-slim {
+  max-width:960px; margin:0 auto; padding:32px 48px;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:0;
+}
+.mega-see-all {
+  display:inline-block; margin-top:10px; padding:6px 0;
+  font-family:'Space Mono',monospace; font-size:0.65rem; letter-spacing:1px;
+  color:var(--yellow); text-decoration:none; transition:opacity 0.18s;
+}
+.mega-see-all:hover { opacity:0.7; }
+
 .mega-inner {
   max-width: 1200px; margin: 0 auto;
   padding: 48px 48px 52px;
@@ -221,7 +233,10 @@ body {
 .mega-link {
   display: flex; align-items: flex-start; gap: 10px;
   padding: 10px 12px; border-radius: 3px; text-decoration: none;
-  transition: background 0.16s;
+  transition: background 0.16s; cursor: pointer;
+  /* reset button styles */
+  background: none; border: none; width: 100%; text-align: left;
+  font-family: inherit; color: inherit;
 }
 .mega-link:hover { background: var(--surface2); }
 .mega-link-icon { font-size: 1.1rem; margin-top: 1px; flex-shrink: 0; }
@@ -506,8 +521,10 @@ body {
   border: 1px solid var(--border2); border-radius: 2px;
   font-size: 0.82rem; color: var(--text2);
   transition: all 0.18s; text-decoration: none;
+  /* button reset */
+  font-family: inherit; cursor: pointer; width: 100%; text-align: left;
 }
-.learn-tool:hover { border-color: var(--yellow); color: var(--text); }
+.learn-tool:hover { border-color: var(--yellow); color: var(--text); background: var(--surface); }
 .learn-tool-icon { font-size: 1rem; }
 .learn-tool .lock { margin-left: auto; font-size: 0.65rem; opacity: 0.4; }
 
@@ -634,25 +651,34 @@ footer {
    MOBILE MENU DRAWER
    ============================================================ */
 .mobile-menu {
-  position: fixed; top: 64px; left: 0; right: 0; bottom: 0; z-index: 150;
-  background: var(--surface); border-top: 1px solid var(--border);
-  padding: 28px 24px; overflow-y: auto;
-  transform: translateX(100%); transition: transform 0.28s ease;
+  position:fixed; top:64px; left:0; right:0; bottom:0; z-index:150;
+  background:var(--surface); border-top:1px solid var(--border);
+  padding:24px 24px 40px; overflow-y:auto;
+  transform:translateX(100%); transition:transform 0.28s ease;
+  display:flex; flex-direction:column; gap:0;
 }
-.mobile-menu.open { transform: translateX(0); }
-.mobile-menu-section { margin-bottom: 28px; }
+.mobile-menu.open { transform:translateX(0); }
+.mobile-menu-section { margin-bottom:20px; }
 .mobile-menu-section h4 {
-  font-family: 'Space Mono', monospace; font-size: 0.6rem;
-  letter-spacing: 3px; text-transform: uppercase; color: var(--yellow); margin-bottom: 12px;
+  font-family:'Space Mono',monospace; font-size:0.6rem;
+  letter-spacing:3px; text-transform:uppercase; color:var(--yellow); margin-bottom:4px;
 }
 .mobile-menu-link {
-  display: flex; align-items: center; gap: 10px;
-  padding: 12px 0; border-bottom: 1px solid var(--border2);
-  font-size: 0.9rem; color: var(--text2); text-decoration: none; transition: color 0.18s;
+  display:flex; align-items:center; gap:10px;
+  padding:14px 0; border-bottom:1px solid var(--border2);
+  font-family:'Space Mono',monospace; font-size:0.75rem;
+  letter-spacing:2px; text-transform:uppercase;
+  color:var(--text); text-decoration:none; transition:color 0.18s;
+  background:none; border-top:none; border-left:none; border-right:none;
+  width:100%; text-align:left; cursor:pointer;
 }
-.mobile-menu-link:hover { color: var(--yellow); }
-.mobile-auth-row { display: flex; gap: 10px; margin-top: 24px; }
-.mobile-auth-row button { flex: 1; }
+.mobile-menu-link:hover { color:var(--yellow); }
+.mobile-theme-row { display:flex; gap:12px; align-items:center; margin:28px 0 20px; }
+.mobile-theme-label { font-family:'Space Mono',monospace; font-size:0.6rem; letter-spacing:2px; color:var(--text2); white-space:nowrap; }
+.mobile-auth-row { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:4px; }
+.mobile-auth-row .btn-login,
+.mobile-auth-row .btn-signup { flex:1; min-width:90px; justify-content:center; }
+.mobile-username { font-family:'Space Mono',monospace; font-size:0.72rem; color:var(--yellow); letter-spacing:1px; width:100%; padding:6px 0 4px; }
 
 /* ============================================================
    ANIMATIONS
@@ -675,9 +701,15 @@ footer {
 @media (max-width: 768px) {
   .nav        { padding: 0 20px; }
   .nav-center { display: none; }
-  .theme-toggle { display: none; }
-  .btn-login, .btn-signup { display: none; }
+  /* hide theme toggle and auth buttons only in the navbar, NOT inside mobile-menu */
+  .nav .theme-toggle { display: none; }
+  .nav .btn-login, .nav .btn-signup { display: none; }
   .hamburger  { display: flex; }
+
+  /* ensure mobile-menu theme + buttons ARE visible */
+  .mobile-menu .theme-toggle { display: flex !important; }
+  .mobile-menu .btn-login  { display: flex !important; }
+  .mobile-menu .btn-signup { display: flex !important; }
 
   .hero       { padding: 100px 20px 60px; }
   .hero-orb-1, .hero-orb-2, .hero-orb-3 { display: none; }

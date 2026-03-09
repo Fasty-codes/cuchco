@@ -1,4 +1,64 @@
 /* ============================================================
+   SHARED NAV + MOBILE STYLES
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--yellow:#FFD100;--yellow-hover:#FFE566;--accent-cube:#FF5733;--accent-code:#00C4D4;--accent-chess:#B882FF;--bg:#0A0A0A;--bg2:#111111;--surface:#1C1C1C;--surface2:#252525;--border:rgba(255,209,0,0.1);--border2:rgba(255,255,255,0.07);--text:#F2F2F2;--text2:#888;--text3:#444;--nav-bg:rgba(10,10,10,0.92);}
+[data-theme="light"]{--yellow:#B8860B;--yellow-hover:#9A6E00;--bg:#F4F3EE;--bg2:#ECEAE3;--surface:#FFFFFF;--surface2:#F0EFE9;--border:rgba(184,134,11,0.15);--border2:rgba(0,0,0,0.08);--text:#111111;--text2:#555;--text3:#AAA;--nav-bg:rgba(244,243,238,0.95);}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:64px;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:"Bebas Neue",sans-serif;font-size:2rem;letter-spacing:5px;color:var(--yellow);text-decoration:none;cursor:pointer;flex-shrink:0;}
+.nav-center{display:flex;align-items:center;gap:4px;position:absolute;left:50%;transform:translateX(-50%);}
+.nav-item{position:relative;}
+.nav-link{font-family:"Space Mono",monospace;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-decoration:none;padding:8px 14px;display:flex;align-items:center;gap:5px;transition:color 0.18s;white-space:nowrap;background:none;border:none;cursor:pointer;}
+.nav-link:hover{color:var(--yellow);}
+.nav-link .chevron{width:10px;height:10px;transition:transform 0.2s;}
+.nav-item:hover .chevron{transform:rotate(180deg);}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.theme-toggle{display:flex;align-items:center;border:1px solid var(--border2);border-radius:2px;overflow:hidden;background:var(--surface2);}
+.t-btn{display:flex;align-items:center;justify-content:center;width:30px;height:28px;border:none;background:none;color:var(--text3);cursor:pointer;transition:all 0.18s;}
+.t-btn+.t-btn{border-left:1px solid var(--border2);}
+.t-btn:hover{color:var(--yellow);background:var(--border);}
+.t-btn.on{background:var(--yellow);color:#0A0A0A;}
+.btn-login{font-family:"Space Mono",monospace;font-size:0.68rem;letter-spacing:1px;padding:8px 18px;border:1px solid var(--border2);background:none;color:var(--text2);cursor:pointer;border-radius:2px;transition:all 0.18s;}
+.btn-login:hover{border-color:var(--yellow);color:var(--yellow);}
+.btn-signup{font-family:"Space Mono",monospace;font-size:0.68rem;letter-spacing:1px;font-weight:700;padding:9px 20px;border:none;background:var(--yellow);color:#0A0A0A;cursor:pointer;border-radius:2px;transition:all 0.18s;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+.btn-signup:hover{background:var(--yellow-hover);}
+.user-chip{display:flex;align-items:center;gap:8px;font-family:"Space Mono",monospace;font-size:0.68rem;color:var(--text2);padding:6px 14px;border:1px solid var(--border2);border-radius:2px;cursor:pointer;background:var(--surface2);transition:all 0.18s;}
+.user-chip:hover{border-color:var(--yellow);color:var(--yellow);}
+.user-avatar{width:24px;height:24px;border-radius:50%;background:var(--yellow);color:#0A0A0A;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text2);}
+.mega-dropdown{position:fixed;top:64px;left:0;right:0;z-index:190;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 20px 60px rgba(0,0,0,0.35);pointer-events:none;opacity:0;transform:translateY(-8px);transition:opacity 0.22s,transform 0.22s;}
+.mega-dropdown.open{opacity:1;transform:translateY(0);pointer-events:all;}
+.mega-inner{max-width:1100px;margin:0 auto;padding:40px 48px;display:grid;grid-template-columns:260px 1fr;gap:60px;}
+.mega-left h2{font-family:"Bebas Neue",sans-serif;font-size:2.2rem;letter-spacing:3px;color:var(--text);line-height:1.1;margin-bottom:12px;}
+.mega-left p{font-size:0.82rem;color:var(--text2);line-height:1.65;margin-bottom:20px;}
+.mega-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.mega-col-head{display:flex;align-items:center;gap:8px;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border2);}
+.mega-col-head.cube{border-color:var(--accent-cube);}
+.mega-col-head.code{border-color:var(--accent-code);}
+.mega-col-head.chess{border-color:var(--accent-chess);}
+.mega-col-head h3{font-family:"Space Mono",monospace;font-size:0.65rem;letter-spacing:3px;color:var(--text2);}
+.mega-links{display:flex;flex-direction:column;gap:4px;}
+.mega-link{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border-radius:3px;text-decoration:none;transition:background 0.16s;cursor:pointer;background:none;border:none;width:100%;text-align:left;font-family:inherit;}
+.mega-link:hover{background:var(--surface2);}
+.mega-link-icon{font-size:1.1rem;margin-top:1px;flex-shrink:0;}
+.mega-link-text strong{display:block;font-size:0.82rem;color:var(--text);font-weight:600;margin-bottom:2px;}
+.mega-link-text span{font-size:0.75rem;color:var(--text2);line-height:1.4;}
+.mega-lock{margin-left:auto;font-size:0.7rem;opacity:0.45;align-self:center;flex-shrink:0;}
+.mobile-menu{position:fixed;top:64px;left:0;right:0;bottom:0;z-index:150;background:var(--surface);border-top:1px solid var(--border);padding:28px 24px;overflow-y:auto;transform:translateX(100%);transition:transform 0.28s ease;}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu-section{margin-bottom:20px;}
+.mobile-menu-section h4{font-family:"Space Mono",monospace;font-size:0.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--yellow);margin-bottom:4px;}
+.mobile-menu-link{display:flex;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid var(--border2);font-family:"Space Mono",monospace;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--text2);text-decoration:none;transition:color 0.18s;background:none;border-top:none;border-left:none;border-right:none;width:100%;text-align:left;cursor:pointer;}
+.mobile-menu-link:hover{color:var(--yellow);}
+.mobile-theme-row{display:flex;gap:10px;align-items:center;margin:24px 0 0;}
+.mobile-theme-label{font-family:"Space Mono",monospace;font-size:0.6rem;letter-spacing:2px;color:var(--text2);}
+.mobile-auth-row{display:flex;gap:10px;margin-top:16px;}
+.mobile-auth-row button{flex:1;}
+@media(max-width:768px){.nav{padding:0 20px;}.nav-center{display:none;}.theme-toggle{display:none;}.btn-login,.btn-signup{display:none;}.hamburger{display:flex;}}
+
+/* ============================================================
    CUCHCO — About.css
    ============================================================ */
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;700&display=swap');
@@ -518,4 +578,16 @@
   .about-stat  { border-right: none; border-bottom: 1px solid var(--border2); }
   .about-stat:last-child { border-bottom: none; }
   .team-avatar { width: 90px; height: 90px; font-size: 2.4rem; }
+}
+
+/* Override: show theme+auth inside mobile-menu even on mobile */
+@media(max-width:768px){
+  .nav .theme-toggle{display:none;}
+  .nav .btn-login,.nav .btn-signup{display:none;}
+  .mobile-menu .theme-toggle{display:flex !important;}
+  .mobile-menu .btn-login{display:flex !important;}
+  .mobile-menu .btn-signup{display:flex !important;}
+  .mobile-menu .mobile-auth-row .btn-login,
+  .mobile-menu .mobile-auth-row .btn-signup{flex:1;min-width:90px;justify-content:center;}
+  .mobile-username{font-family:'Space Mono',monospace;font-size:0.72rem;color:var(--yellow);width:100%;padding:6px 0 4px;letter-spacing:1px;}
 }

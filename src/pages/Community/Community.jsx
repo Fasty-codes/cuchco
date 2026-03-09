@@ -1,5 +1,6 @@
 // import { useState, useEffect, useRef, useCallback } from "react";
 import { useState, useEffect, useRef } from "react";
+
 import "./Community.css";
 import {
   apiRegister, apiLogin, apiUpdateProfile,
@@ -801,35 +802,20 @@ export default function Community() {
         <a href="/" className="nav-logo" style={{ textDecoration:"none" }}>CUCHCO</a>
 
         <div className="nav-center">
-          {/* Learn — mega dropdown */}
-          <div className="nav-item">
-            <button
-              className="nav-link"
+          <div className="nav-item" onMouseLeave={() => setDropdown(null)}>
+            <a href="/learn" className="nav-link"
               onMouseEnter={() => setDropdown("learn")}
-              onClick={() => setDropdown(dropdown === "learn" ? null : "learn")}
-            >
-              Learn <ChevronDown />
-            </button>
+              onClick={() => setDropdown(null)}
+            >Learn <ChevronDown /></a>
           </div>
-
-          {/* Lessons — goes back to home lessons section */}
           <div className="nav-item">
-            <button className="nav-link"
-              onClick={() => { window.location.href = "/#lessons"; }}>
-              Lessons
-            </button>
+            <a href="/#lessons" className="nav-link">Lessons</a>
           </div>
-
-          {/* Community — active page */}
           <div className="nav-item">
-            <span className="nav-link" style={{ color:"var(--yellow)", cursor:"default" }}>
-              Community
-            </span>
+            <a href="/community" className="nav-link" style={{color:"var(--yellow)"}}>Community</a>
           </div>
-
-          {/* About */}
           <div className="nav-item">
-            <a href="/#about" className="nav-link">About</a>
+            <a href="/about" className="nav-link">About</a>
           </div>
         </div>
 
@@ -894,12 +880,13 @@ export default function Community() {
                 </div>
                 <div className="mega-links">
                   {MEGA_ITEMS[cat].map(item => (
-                    <a key={item.label}
+                    <a
+                      key={item.label}
                       href={item.locked && !user ? undefined : item.href}
                       className="mega-link"
-                      onClick={e => {
-                        if (item.locked && !user) { e.preventDefault(); setDropdown(null); openAuth("login"); }
-                        else setDropdown(null);
+                      onClick={(e) => {
+                        setDropdown(null);
+                        if (item.locked && !user) { e.preventDefault(); openAuth("login"); }
                       }}
                     >
                       <span className="mega-link-icon">{item.icon}</span>
@@ -919,35 +906,30 @@ export default function Community() {
 
       {/* ══════════ MOBILE MENU ══════════ */}
       <div className={`mobile-menu${mobileOpen ? " open" : ""}`}>
-        <div className="mobile-menu-section">
-          <h4>Navigate</h4>
-          <a href="/"          className="mobile-menu-link" onClick={() => setMobileOpen(false)}>🏠 Home</a>
-          <a href="/#lessons"  className="mobile-menu-link" onClick={() => setMobileOpen(false)}>📚 Lessons</a>
-          <a href="/community" className="mobile-menu-link" onClick={() => setMobileOpen(false)}>💬 Community</a>
-        </div>
-        <div className="mobile-menu-section">
-          <h4>Free Tools</h4>
-          <a href="/cube"  className="mobile-menu-link" onClick={() => setMobileOpen(false)}>🧩 Cube Solver</a>
-          <a href="/chess" className="mobile-menu-link" onClick={() => setMobileOpen(false)}>♟️ Chess Board</a>
-          <a href="/code"  className="mobile-menu-link" onClick={() => setMobileOpen(false)}>💻 Code Playground</a>
-        </div>
-        <div className="mobile-auth-row">
-          {user ? (
-            <button className="btn-signup" style={{flex:1}} onClick={() => { setMobileOpen(false); setSettingsOpen(true); }}>⚙ Settings</button>
-          ) : (
-            <>
-              <button className="btn-login"  style={{flex:1}} onClick={() => { setMobileOpen(false); openAuth("login"); }}>Log In</button>
-              <button className="btn-signup" style={{flex:1}} onClick={() => { setMobileOpen(false); openAuth("signup"); }}>Sign Up</button>
-            </>
-          )}
-        </div>
-        <div style={{marginTop:24,display:"flex",gap:8,alignItems:"center"}}>
-          <span style={{fontFamily:"Space Mono,monospace",fontSize:"0.6rem",letterSpacing:"2px",color:"var(--text2)"}}>THEME</span>
+        <a href="/learn"      className="mobile-menu-link" onClick={() => setMobileOpen(false)}>Learn</a>
+        <a href="/#lessons"   className="mobile-menu-link" onClick={() => setMobileOpen(false)}>Lessons</a>
+        <a href="/community"  className="mobile-menu-link" onClick={() => setMobileOpen(false)}>Community</a>
+        <a href="/about"      className="mobile-menu-link" onClick={() => setMobileOpen(false)}>About</a>
+        <div className="mobile-theme-row">
+          <span className="mobile-theme-label">THEME</span>
           <div className="theme-toggle">
             <button className={`t-btn${themeMode==="light"  ? " on" : ""}`} onClick={() => setThemeMode("light")}><SunIcon/></button>
             <button className={`t-btn${themeMode==="system" ? " on" : ""}`} onClick={() => setThemeMode("system")}><MonitorIcon/></button>
             <button className={`t-btn${themeMode==="dark"   ? " on" : ""}`} onClick={() => setThemeMode("dark")}><MoonIcon/></button>
           </div>
+        </div>
+        <div className="mobile-auth-row">
+          {user ? (
+            <>
+              <span className="mobile-username">👤 {user.username}</span>
+              <button className="btn-login" onClick={() => { setMobileOpen(false); setSettingsOpen(true); }}>Settings</button>
+            </>
+          ) : (
+            <>
+              <button className="btn-login"  onClick={() => { setMobileOpen(false); openAuth("login"); }}>Log In</button>
+              <button className="btn-signup" onClick={() => { setMobileOpen(false); openAuth("signup"); }}>Sign Up</button>
+            </>
+          )}
         </div>
       </div>
 

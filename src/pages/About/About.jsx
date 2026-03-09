@@ -150,12 +150,11 @@ export default function About() {
         <a href="/" className="nav-logo" style={{ textDecoration:"none" }}>CUCHCO</a>
 
         <div className="nav-center">
-          <div className="nav-item">
-            <button className="nav-link"
+          <div className="nav-item" onMouseLeave={() => setDropdown(null)}>
+            <a href="/learn" className="nav-link"
               onMouseEnter={() => setDropdown("learn")}
-              onClick={() => setDropdown(dropdown === "learn" ? null : "learn")}>
-              Learn <ChevronDown />
-            </button>
+              onClick={() => setDropdown(null)}
+            >Learn <ChevronDown /></a>
           </div>
           <div className="nav-item">
             <a href="/#lessons" className="nav-link">Lessons</a>
@@ -164,7 +163,7 @@ export default function About() {
             <a href="/community" className="nav-link">Community</a>
           </div>
           <div className="nav-item">
-            <span className="nav-link" style={{ color:"var(--yellow)", cursor:"default" }}>About</span>
+            <a href="/about" className="nav-link" style={{color:"var(--yellow)"}}>About</a>
           </div>
         </div>
 
@@ -200,7 +199,10 @@ export default function About() {
       </nav>
 
       {/* Mega dropdown */}
-      <div className={`mega-dropdown${dropdown === "learn" ? " open" : ""}`} onMouseLeave={() => setDropdown(null)}>
+      <div className={`mega-dropdown${dropdown === "learn" ? " open" : ""}`}
+        onMouseLeave={() => setDropdown(null)}
+        onMouseEnter={() => setDropdown("learn")}
+      >
         <div className="mega-inner">
           <div className="mega-left">
             <h2>MASTER<br/>YOUR MIND</h2>
@@ -234,18 +236,30 @@ export default function About() {
 
       {/* Mobile menu */}
       <div className={`mobile-menu${mobileOpen ? " open" : ""}`}>
-        <div className="mobile-menu-section">
-          <h4>Navigate</h4>
-          <a href="/"          className="mobile-menu-link">🏠 Home</a>
-          <a href="/#lessons"  className="mobile-menu-link">📚 Lessons</a>
-          <a href="/community" className="mobile-menu-link">💬 Community</a>
-          <a href="/about"     className="mobile-menu-link">ℹ️ About</a>
+        <a href="/learn"      className="mobile-menu-link" onClick={() => setMobileOpen(false)}>Learn</a>
+        <a href="/#lessons"   className="mobile-menu-link" onClick={() => setMobileOpen(false)}>Lessons</a>
+        <a href="/community"  className="mobile-menu-link" onClick={() => setMobileOpen(false)}>Community</a>
+        <a href="/about"      className="mobile-menu-link" onClick={() => setMobileOpen(false)}>About</a>
+        <div className="mobile-theme-row">
+          <span className="mobile-theme-label">THEME</span>
+          <div className="theme-toggle">
+            <button className={`t-btn${themeMode==="light"  ? " on":""}`} onClick={() => setThemeMode("light")}><SunIcon/></button>
+            <button className={`t-btn${themeMode==="system" ? " on":""}`} onClick={() => setThemeMode("system")}><MonitorIcon/></button>
+            <button className={`t-btn${themeMode==="dark"   ? " on":""}`} onClick={() => setThemeMode("dark")}><MoonIcon/></button>
+          </div>
         </div>
         <div className="mobile-auth-row">
-          {user
-            ? <button className="btn-signup" style={{flex:1}} onClick={handleLogout}>Log Out</button>
-            : <button className="btn-signup" style={{flex:1}} onClick={() => window.location.href="/"}>Log In / Sign Up</button>
-          }
+          {user ? (
+            <>
+              <span className="mobile-username">👤 {user.username}</span>
+              <button className="btn-login" onClick={handleLogout}>Log Out</button>
+            </>
+          ) : (
+            <>
+              <button className="btn-login"  onClick={() => window.location.href="/"}>Log In</button>
+              <button className="btn-signup" onClick={() => window.location.href="/"}>Sign Up</button>
+            </>
+          )}
         </div>
       </div>
 

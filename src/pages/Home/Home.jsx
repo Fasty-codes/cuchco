@@ -302,44 +302,20 @@ export default function Home() {
         <div className="nav-logo">CUCHCO</div>
 
         <div className="nav-center">
-          {/* Learn — mega dropdown */}
-          <div className="nav-item">
-            <button
-              className="nav-link"
+          <div className="nav-item" onMouseLeave={() => setDropdown(null)}>
+            <a href="/learn" className="nav-link"
               onMouseEnter={() => setDropdown("learn")}
-              onClick={() => setDropdown(dropdown === "learn" ? null : "learn")}
-            >
-              Learn <ChevronDown />
-            </button>
+              onClick={() => setDropdown(null)}
+            >Learn <ChevronDown /></a>
           </div>
-
-          {/* Lessons — gated */}
           <div className="nav-item">
-            <button
-              className="nav-link"
-              onClick={() => requireAuth(() => {
-                setDropdown(null);
-                document.getElementById("lessons")?.scrollIntoView({ behavior: "smooth" });
-              })}
-            >
-              Lessons {!user && <span className="lock-icon">🔒</span>}
-            </button>
+            <a href="/#lessons" className="nav-link">Lessons</a>
           </div>
-
-          {/* Community — goes to /community page */}
           <div className="nav-item">
-            <button
-              className="nav-link"
-              onClick={() => requireAuth(() => {
-                window.location.href = "/community";
-              })}
-            >
-              Community {!user && <span className="lock-icon">🔒</span>}
-            </button>
+            <a href="/community" className="nav-link">Community</a>
           </div>
-
           <div className="nav-item">
-            <a href="#about" className="nav-link" onClick={() => setDropdown(null)}>About</a>
+            <a href="/about" className="nav-link">About</a>
           </div>
         </div>
 
@@ -381,85 +357,73 @@ export default function Home() {
       <div
         className={`mega-dropdown${dropdown === "learn" ? " open" : ""}`}
         onMouseLeave={() => setDropdown(null)}
+        onMouseEnter={() => setDropdown("learn")}
       >
-        <div className="mega-inner">
-          <div className="mega-left">
-            <h2>MASTER<br/>YOUR MIND</h2>
-            <p>Explore Cubing, Coding, and Chess — three disciplines that sharpen your brain in different ways.</p>
-            {!user && (
-              <button className="btn-signup" onClick={() => { setDropdown(null); setAuthTab("signup"); setAuthOpen(true); }}>
-                Get Started Free →
-              </button>
-            )}
-          </div>
-
-          <div className="mega-cols">
-            {["cube","code","chess"].map(cat => (
-              <div className="mega-col" key={cat}>
-                <div className={`mega-col-head ${cat}`}>
-                  <span>{cat==="cube"?"🧩":cat==="code"?"💻":"♟️"}</span>
-                  <h3>{cat.toUpperCase()}</h3>
-                </div>
-                <div className="mega-links">
-                  {MEGA_ITEMS[cat].map(item => (
-                    <button
-                      key={item.label}
-                      className="mega-link"
-                      onClick={() => {
-                        setDropdown(null);
-                        if (item.locked) requireAuth(() => {});
-                        else if (item.href) window.location.href = item.href;
-                      }}
-                    >
-                      <span className="mega-link-icon">{item.icon}</span>
-                      <div className="mega-link-text">
-                        <strong>{item.label}</strong>
-                        <span>{item.desc}</span>
-                      </div>
-                      {item.locked && !user && <span className="mega-lock">🔒</span>}
-                    </button>
-                  ))}
-                </div>
+        <div className="mega-inner-slim">
+          {["cube","code","chess"].map(cat => (
+            <div className="mega-col" key={cat}>
+              <div className={`mega-col-head ${cat}`}>
+                <span>{cat==="cube"?"🧩":cat==="code"?"💻":"♟️"}</span>
+                <h3>{cat.toUpperCase()}</h3>
               </div>
-            ))}
-          </div>
+              <div className="mega-links">
+                {MEGA_ITEMS[cat].slice(0,3).map(item => (
+                  <a
+                    key={item.label}
+                    href={item.locked && !user ? undefined : item.href}
+                    className="mega-link"
+                    onClick={(e) => {
+                      setDropdown(null);
+                      if (item.locked && !user) { e.preventDefault(); setAuthTab("login"); setAuthOpen(true); }
+                    }}
+                  >
+                    <span className="mega-link-icon">{item.icon}</span>
+                    <div className="mega-link-text">
+                      <strong>{item.label}</strong>
+                      <span>{item.desc}</span>
+                    </div>
+                    {item.locked && !user && <span className="mega-lock">🔒</span>}
+                  </a>
+                ))}
+                <a href="/learn" className="mega-see-all" onClick={() => setDropdown(null)}>See all →</a>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
       {/* ══════════ MOBILE MENU ══════════ */}
       <div className={`mobile-menu${mobileOpen ? " open" : ""}`}>
-        <div className="mobile-menu-section">
-          <h4>Free Tools</h4>
-          {["Cube Solver","Speed Timer","Chess Board","Code Playground"].map(l => (
-            <button key={l} className="mobile-menu-link" onClick={() => setMobileOpen(false)}>{l}</button>
-          ))}
-        </div>
-        <div className="mobile-menu-section">
-          <h4>Requires Login</h4>
-          {["Lessons","Community","Full Courses","Game Analysis"].map(l => (
-            <button key={l} className="mobile-menu-link"
-              onClick={() => { setMobileOpen(false); requireAuth(() => {}); }}>
-              🔒 {l}
-            </button>
-          ))}
-        </div>
-        <div className="mobile-auth-row">
-          {user ? (
-            <button className="btn-signup" style={{flex:1}} onClick={handleLogout}>Log Out ({user.username})</button>
-          ) : (
-            <>
-              <button className="btn-login"  style={{flex:1}} onClick={() => { setMobileOpen(false); setAuthTab("login");  setAuthOpen(true); }}>Log In</button>
-              <button className="btn-signup" style={{flex:1}} onClick={() => { setMobileOpen(false); setAuthTab("signup"); setAuthOpen(true); }}>Sign Up</button>
-            </>
-          )}
-        </div>
-        <div style={{marginTop:24,display:"flex",gap:8,alignItems:"center"}}>
-          <span style={{fontFamily:"Space Mono,monospace",fontSize:"0.6rem",letterSpacing:"2px",color:"var(--text2)"}}>THEME</span>
+
+        {/* Nav links */}
+        <a href="/learn"      className="mobile-menu-link" onClick={() => setMobileOpen(false)}>Learn</a>
+        <a href="/#lessons"   className="mobile-menu-link" onClick={() => setMobileOpen(false)}>Lessons</a>
+        <a href="/community"  className="mobile-menu-link" onClick={() => setMobileOpen(false)}>Community</a>
+        <a href="/about"      className="mobile-menu-link" onClick={() => setMobileOpen(false)}>About</a>
+
+        {/* Theme toggle */}
+        <div className="mobile-theme-row">
+          <span className="mobile-theme-label">THEME</span>
           <div className="theme-toggle">
             <button className={`t-btn${themeMode==="light"  ? " on" : ""}`} onClick={() => setThemeMode("light")}><SunIcon/></button>
             <button className={`t-btn${themeMode==="system" ? " on" : ""}`} onClick={() => setThemeMode("system")}><MonitorIcon/></button>
             <button className={`t-btn${themeMode==="dark"   ? " on" : ""}`} onClick={() => setThemeMode("dark")}><MoonIcon/></button>
           </div>
+        </div>
+
+        {/* Auth */}
+        <div className="mobile-auth-row">
+          {user ? (
+            <>
+              <span className="mobile-username">👤 {user.username}</span>
+              <button className="btn-login" onClick={handleLogout}>Log Out</button>
+            </>
+          ) : (
+            <>
+              <button className="btn-login"  onClick={() => { setMobileOpen(false); setAuthTab("login");  setAuthOpen(true); }}>Log In</button>
+              <button className="btn-signup" onClick={() => { setMobileOpen(false); setAuthTab("signup"); setAuthOpen(true); }}>Sign Up</button>
+            </>
+          )}
         </div>
       </div>
 
@@ -529,13 +493,15 @@ export default function Home() {
               <p className="learn-card-desc">{card.desc}</p>
               <div className="learn-tools">
                 {MEGA_ITEMS[card.key].map(t => (
-                  <a key={t.label} href={t.locked && !user ? undefined : t.href}
-                    className="learn-tool"
-                    onClick={e => { if (t.locked && !user) { e.preventDefault(); requireAuth(() => {}); } }}>
+                  <button key={t.label} className="learn-tool"
+                    onClick={() => {
+                      if (t.locked && !user) requireAuth(() => {});
+                      else window.location.href = t.href;
+                    }}>
                     <span className="learn-tool-icon">{t.icon}</span>
                     {t.label}
                     {t.locked && !user && <span className="lock">🔒</span>}
-                  </a>
+                  </button>
                 ))}
               </div>
             </div>
