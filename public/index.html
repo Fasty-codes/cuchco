@@ -2,42 +2,323 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/logo.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Cuchco - Your AI-powered and personalized learning companion"
-    />
+
+    <!-- ── FAVICON & ICONS ── -->
+    <link rel="icon"             href="%PUBLIC_URL%/logo.png" type="image/png" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
+
+    <!-- ── VIEWPORT ── -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#080808" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#F2F0E8" media="(prefers-color-scheme: light)" />
+
+    <!-- ── PRIMARY META ── -->
+    <title>Cuchco — Master Cubing, Coding & Chess</title>
+    <meta name="description" content="Cuchco is your all-in-one learning platform for Rubik's Cube speedsolving, coding, and chess. Free tools, premium courses, and a growing community." />
+    <meta name="keywords"    content="rubiks cube solver, speedcubing, learn to code, chess tactics, cfop, learn coding, online chess, cube timer, algorithm library" />
+    <meta name="author"      content="Cuchco" />
+    <meta name="robots"      content="index, follow" />
+
+    <!-- ── OPEN GRAPH (Facebook / LinkedIn / WhatsApp) ── -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content="https://cuchco.com/" />
+    <meta property="og:title"       content="Cuchco — Master Cubing, Coding & Chess" />
+    <meta property="og:description" content="Three disciplines. One platform. Free tools for cube solving, live coding, and chess — plus premium courses to go pro." />
+    <meta property="og:image"       content="%PUBLIC_URL%/logo.png" />
+    <meta property="og:image:alt"   content="Cuchco logo" />
+    <meta property="og:site_name"   content="Cuchco" />
+    <meta property="og:locale"      content="en_US" />
+
+    <!-- ── TWITTER CARD ── -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="Cuchco — Master Cubing, Coding & Chess" />
+    <meta name="twitter:description" content="Three disciplines. One platform. Free tools for cube solving, live coding, and chess — plus premium courses to go pro." />
+    <meta name="twitter:image"       content="%PUBLIC_URL%/logo.png" />
+
+    <!-- ── PWA MANIFEST ── -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>Cuchco</title>
+    <!-- ── FONTS PRECONNECT (performance) ── -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- ── PREVENT FOUC on dark mode ── -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem('cuchco-theme');
+          var theme = saved === 'light' ? 'light'
+                    : saved === 'dark'  ? 'dark'
+                    : window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {}
+      })();
+    </script>
+
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      :root { background: #ffffff; }
+      body { margin: 0; overflow-x: hidden; }
+
+      /* ── SPLASH ── */
+      #splash {
+        position: fixed; inset: 0; z-index: 9999;
+        background: #ffffff;
+        display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        gap: 0;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+      }
+      #splash.hide {
+        opacity: 0;
+        transform: scale(1.04);
+        pointer-events: none;
+      }
+
+      /* Radial shimmer bg */
+      #splash::before {
+        content: '';
+        position: absolute; inset: 0;
+        background:
+          radial-gradient(ellipse 60% 50% at 50% 50%, rgba(255,209,0,0.10) 0%, transparent 70%),
+          radial-gradient(ellipse 30% 30% at 20% 80%, rgba(255,87,51,0.06) 0%, transparent 60%),
+          radial-gradient(ellipse 30% 30% at 80% 20%, rgba(0,196,212,0.06) 0%, transparent 60%);
+        animation: bgShimmer 3s ease-in-out infinite alternate;
+      }
+      @keyframes bgShimmer {
+        from { opacity: 0.6; transform: scale(1); }
+        to   { opacity: 1;   transform: scale(1.05); }
+      }
+
+      /* Fine dot grid */
+      #splash::after {
+        content: '';
+        position: absolute; inset: 0; pointer-events: none;
+        background-image: radial-gradient(circle, #e5e5e5 1px, transparent 1px);
+        background-size: 28px 28px;
+        mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 20%, transparent 100%);
+        opacity: 0.5;
+      }
+
+      /* Logo */
+      #splash-logo-wrap {
+        position: relative; z-index: 2;
+        width: 88px; height: 88px;
+        display: flex; align-items: center; justify-content: center;
+        margin-bottom: 22px;
+        animation: logoIn 0.7s cubic-bezier(0.16,1,0.3,1) both;
+      }
+      /* spinning ring behind logo */
+      #splash-logo-wrap::before {
+        content: '';
+        position: absolute; inset: -10px;
+        border-radius: 50%;
+        border: 1.5px solid transparent;
+        border-top-color: #FFD100;
+        border-right-color: #FFD10044;
+        animation: ringSpinA 1.4s linear infinite;
+      }
+      #splash-logo-wrap::after {
+        content: '';
+        position: absolute; inset: -20px;
+        border-radius: 50%;
+        border: 1px solid transparent;
+        border-bottom-color: #FF573344;
+        border-left-color:  #00C4D422;
+        animation: ringSpinB 2.1s linear infinite reverse;
+      }
+      @keyframes ringSpinA { to { transform: rotate(360deg); } }
+      @keyframes ringSpinB { to { transform: rotate(360deg); } }
+      @keyframes logoIn {
+        from { opacity: 0; transform: scale(0.6) translateY(12px); }
+        to   { opacity: 1; transform: scale(1) translateY(0); }
+      }
+
+      #splash-logo {
+        width: 72px; height: 72px;
+        object-fit: contain;
+        position: relative; z-index: 1;
+        animation: logoBob 2.4s ease-in-out infinite;
+        filter: drop-shadow(0 4px 20px rgba(255,209,0,0.25));
+      }
+      @keyframes logoBob {
+        0%, 100% { transform: translateY(0); }
+        50%      { transform: translateY(-5px); }
+      }
+
+      /* Wordmark */
+      #splash-wordmark {
+        position: relative; z-index: 2;
+        font-family: 'Arial Black', 'Impact', sans-serif;
+        font-size: 2.6rem;
+        letter-spacing: 12px;
+        color: #111111;
+        line-height: 1;
+        margin-bottom: 6px;
+        animation: wordIn 0.7s 0.15s cubic-bezier(0.16,1,0.3,1) both;
+        text-indent: 12px; /* offset for letter-spacing on last char */
+      }
+      #splash-wordmark span { color: #FFD100; }
+      @keyframes wordIn {
+        from { opacity: 0; transform: translateY(10px); letter-spacing: 20px; }
+        to   { opacity: 1; transform: translateY(0);    letter-spacing: 12px; }
+      }
+
+      /* Tagline */
+      #splash-tag {
+        position: relative; z-index: 2;
+        font-family: 'Courier New', monospace;
+        font-size: 0.6rem;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #aaaaaa;
+        margin-bottom: 40px;
+        animation: wordIn 0.7s 0.25s both;
+      }
+
+      /* ── LOADER BAR CONTAINER ── */
+      #splash-loader {
+        position: relative; z-index: 2;
+        width: 200px;
+        animation: wordIn 0.5s 0.35s both;
+      }
+
+      /* Track */
+      #splash-track {
+        width: 100%; height: 3px;
+        background: #eeeeee;
+        border-radius: 99px;
+        overflow: hidden;
+        position: relative;
+        margin-bottom: 12px;
+      }
+
+      /* Primary fill — grows from 0 to ~80% then waits */
+      #splash-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #FFD100, #FF9500);
+        border-radius: 99px;
+        animation: fillGrow 2s cubic-bezier(0.4,0,0.2,1) 0.4s forwards;
+        position: relative;
+        box-shadow: 0 0 8px #FFD10088;
+      }
+      @keyframes fillGrow {
+        0%   { width: 0%; }
+        60%  { width: 75%; }
+        80%  { width: 82%; }
+        100% { width: 82%; }
+      }
+
+      /* Sheen sweep over the fill */
+      #splash-fill::after {
+        content: '';
+        position: absolute; top: 0; right: -40px;
+        width: 40px; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+        animation: sheen 1.4s 0.8s ease-in-out infinite;
+      }
+      @keyframes sheen {
+        0%   { transform: translateX(-80px); opacity: 0; }
+        30%  { opacity: 1; }
+        100% { transform: translateX(240px); opacity: 0; }
+      }
+
+      /* Three animated dots */
+      #splash-dots {
+        display: flex; gap: 6px; justify-content: center; align-items: center;
+      }
+      .sdot {
+        width: 5px; height: 5px; border-radius: 50%;
+        background: #dddddd;
+        animation: dotPop 1.2s ease-in-out infinite;
+      }
+      .sdot:nth-child(1) { animation-delay: 0s;    background: #FFD100; }
+      .sdot:nth-child(2) { animation-delay: 0.18s; background: #FF5733; }
+      .sdot:nth-child(3) { animation-delay: 0.36s; background: #00C4D4; }
+      .sdot:nth-child(4) { animation-delay: 0.54s; background: #B882FF; }
+      @keyframes dotPop {
+        0%, 80%, 100% { transform: scale(1);   opacity: 0.35; }
+        40%           { transform: scale(1.6); opacity: 1; }
+      }
+
+      /* Corner accents */
+      .splash-corner {
+        position: absolute; width: 32px; height: 32px;
+        opacity: 0.25;
+        animation: cornerFade 2s ease-in-out infinite alternate;
+      }
+      .splash-corner.tl { top: 32px; left: 32px; border-top: 1.5px solid #FFD100; border-left: 1.5px solid #FFD100; }
+      .splash-corner.tr { top: 32px; right: 32px; border-top: 1.5px solid #FFD100; border-right: 1.5px solid #FFD100; }
+      .splash-corner.bl { bottom: 32px; left: 32px; border-bottom: 1.5px solid #FFD100; border-left: 1.5px solid #FFD100; }
+      .splash-corner.br { bottom: 32px; right: 32px; border-bottom: 1.5px solid #FFD100; border-right: 1.5px solid #FFD100; }
+      @keyframes cornerFade { from { opacity: 0.15; } to { opacity: 0.4; } }
+    </style>
   </head>
+
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      <div style="font-family:sans-serif;padding:40px;text-align:center;">
+        You need to enable JavaScript to run Cuchco.
+      </div>
+    </noscript>
+
+    <!-- Loading splash — hidden by React once app mounts -->
+    <div id="splash" aria-hidden="true">
+      <!-- Corner brackets -->
+      <div class="splash-corner tl"></div>
+      <div class="splash-corner tr"></div>
+      <div class="splash-corner bl"></div>
+      <div class="splash-corner br"></div>
+
+      <!-- Logo with spinning rings -->
+      <div id="splash-logo-wrap">
+        <img id="splash-logo" src="%PUBLIC_URL%/logo.png" alt="Cuchco" />
+      </div>
+
+      <!-- Wordmark -->
+      <div id="splash-wordmark">CUC<span>H</span>CO</div>
+      <div id="splash-tag">Cubing &bull; Coding &bull; Chess</div>
+
+      <!-- Animated loader -->
+      <div id="splash-loader">
+        <div id="splash-track">
+          <div id="splash-fill"></div>
+        </div>
+        <div id="splash-dots">
+          <div class="sdot"></div>
+          <div class="sdot"></div>
+          <div class="sdot"></div>
+          <div class="sdot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- React root -->
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+    <!-- Hide splash once React has painted -->
+    <script>
+      (function () {
+        var splash = document.getElementById('splash');
+        var fill   = document.getElementById('splash-fill');
+        var observer = new MutationObserver(function () {
+          var root = document.getElementById('root');
+          if (root && root.childElementCount > 0) {
+            // Complete the bar to 100% then fade out
+            if (fill) {
+              fill.style.transition = 'width 0.3s ease';
+              fill.style.width = '100%';
+            }
+            setTimeout(function () {
+              splash.classList.add('hide');
+              setTimeout(function () { splash.style.display = 'none'; }, 520);
+            }, 320);
+            observer.disconnect();
+          }
+        });
+        observer.observe(document.getElementById('root'), { childList: true, subtree: true });
+      })();
+    </script>
   </body>
 </html>
