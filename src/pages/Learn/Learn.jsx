@@ -15,11 +15,11 @@ const DISCIPLINES = [
     tagline:"Speed. Logic. Algorithms.",
     blurb:"From beginner basics to sub-10 CFOP — sharpen your hands and your mind.",
     items:[
-      { icon:"🧩", label:"Cube Solver",      badge:"FREE",    desc:"Input your cube state, get the optimal solution with animated step-by-step moves.", locked:false, href:"/cube"  },
-      { icon:"⏱️", label:"Speed Timer",       badge:"FREE",    desc:"WCA-style competition timer. Tracks Ao5, Ao12 averages and your best sessions.",    locked:false, href:"/cube"  },
-      { icon:"📖", label:"Algorithm Library", badge:"PREMIUM", desc:"Complete OLL & PLL reference — 78 algorithms with move notation and preview.",      locked:true,  href:"/cube"  },
-      { icon:"🏆", label:"Beginner Course",   badge:"PREMIUM", desc:"Layer-by-layer full method. Go from scrambled to solved in a single afternoon.",    locked:true,  href:"/cube"  },
-      { icon:"🚀", label:"CFOP Full Course",  badge:"PREMIUM", desc:"The world record speedcubing method. F2L pairs, OLL, PLL — every step mastered.",   locked:true,  href:"/cube"  },
+      { icon:"🧩", label:"Cube Solver",      badge:"FREE", desc:"Input your cube state, get the optimal solution with animated step-by-step moves.", locked:false, href:"/cube/solver" },
+      { icon:"⏱️", label:"Speed Timer",       badge:"FREE", desc:"WCA-style competition timer. Tracks Ao5, Ao12 averages and your best sessions.",    locked:false, href:"/cube/timer" },
+      { icon:"📖", label:"Algorithm Library", badge:"FREE", desc:"Complete OLL & PLL reference — 78 algorithms with move notation and preview.",      locked:false,  href:"/cube"  },
+      { icon:"🏆", label:"Beginner Course",   badge:"FREE", desc:"Layer-by-layer full method. Go from scrambled to solved in a single afternoon.",    locked:false,  href:"/cube"  },
+      { icon:"🚀", label:"CFOP Full Course",  badge:"FREE", desc:"The world record speedcubing method. F2L pairs, OLL, PLL — every step mastered.",   locked:false,  href:"/cube"  },
     ]
   },
   {
@@ -28,11 +28,11 @@ const DISCIPLINES = [
     tagline:"Build. Ship. Repeat.",
     blurb:"From your first HTML tag to shipping React apps — the complete builder's path.",
     items:[
-      { icon:"💻", label:"Code Playground",  badge:"FREE",    desc:"Live HTML / CSS / JS sandbox in the browser. Write code and see results instantly.", locked:false, href:"/code"  },
-      { icon:"🌐", label:"Web Dev Track",    badge:"PREMIUM", desc:"The complete path: HTML → CSS → JavaScript → React. Real projects throughout.",      locked:true,  href:"/code"  },
-      { icon:"🐍", label:"Python Basics",    badge:"PREMIUM", desc:"Variables, functions, loops, projects. From zero to Pythonic developer in weeks.",    locked:true,  href:"/code"  },
-      { icon:"⚛️", label:"React Course",     badge:"PREMIUM", desc:"Hooks, state, context, API calls. Build production-level UIs from scratch.",          locked:true,  href:"/code"  },
-      { icon:"🛠️", label:"Project Builder",  badge:"PREMIUM", desc:"Guided real-world builds: portfolio sites, full-stack apps, REST APIs.",              locked:true,  href:"/code"  },
+      { icon:"💻", label:"Code Playground",  badge:"FREE",    desc:"Live HTML / CSS / JS sandbox in the browser. Write code and see results instantly.", locked:false, href:"/coding"  },
+      { icon:"🌐", label:"Web Dev Track",    badge:"FREE", desc:"The complete path: HTML → CSS → JavaScript → React. Real projects throughout.",      locked:false,  href:"/coding"  },
+      { icon:"🐍", label:"Python Basics",    badge:"FREE", desc:"Variables, functions, loops, projects. From zero to Pythonic developer in weeks.",    locked:false,  href:"/coding"  },
+      { icon:"⚛️", label:"React Course",     badge:"FREE", desc:"Hooks, state, context, API calls. Build production-level UIs from scratch.",          locked:false,  href:"/coding"  },
+      { icon:"🛠️", label:"Project Builder",  badge:"FREE", desc:"Guided real-world builds: portfolio sites, full-stack apps, REST APIs.",              locked:false,  href:"/coding"  },
     ]
   },
   {
@@ -41,11 +41,11 @@ const DISCIPLINES = [
     tagline:"Think. Calculate. Win.",
     blurb:"Tactics, openings and endgames — train your brain to think ten moves ahead.",
     items:[
-      { icon:"♟️", label:"Chess Board",      badge:"FREE",    desc:"Full-rules board. Castling, en passant, promotions, checkmate detection — all there.", locked:false, href:"/chess" },
-      { icon:"🧩", label:"Puzzle Trainer",   badge:"FREE",    desc:"Daily tactics — forks, pins, skewers, back-rank mates. Pattern recognition engine.",  locked:false, href:"/chess" },
-      { icon:"📚", label:"Opening Explorer", badge:"PREMIUM", desc:"Italian, Sicilian, London — learn the theory, key ideas and deadly traps.",             locked:true,  href:"/chess" },
-      { icon:"📊", label:"Game Analysis",    badge:"PREMIUM", desc:"Engine evaluation bar, blunder detection, annotated move-by-move game review.",         locked:true,  href:"/chess" },
-      { icon:"🎓", label:"Endgame Studies",  badge:"PREMIUM", desc:"King activation, opposition, pawn races. The most decisive phase of the game.",         locked:true,  href:"/chess" },
+      { icon:"♟️", label:"Chess Board",      badge:"FREE", desc:"Full-rules board. Castling, en passant, promotions, checkmate detection — all there.", locked:false, href:"/chess/board" },
+      { icon:"🧩", label:"Puzzle Trainer",   badge:"FREE", desc:"Daily tactics — forks, pins, skewers, back-rank mates. Pattern recognition engine.",  locked:false, href:"/chess" },
+      { icon:"📚", label:"Opening Explorer", badge:"FREE", desc:"Italian, Sicilian, London — learn the theory, key ideas and deadly traps.",             locked:false,  href:"/chess" },
+      { icon:"📊", label:"Game Analysis",    badge:"FREE", desc:"Engine evaluation bar, blunder detection, annotated move-by-move game review.",         locked:false,  href:"/chess" },
+      { icon:"🎓", label:"Endgame Studies",  badge:"FREE", desc:"King activation, opposition, pawn races. The most decisive phase of the game.",         locked:false,  href:"/chess" },
     ]
   }
 ];
@@ -323,23 +323,18 @@ export default function Learn() {
         </section>
       )}
 
-      {/* ══ FOOTER ══ */}
+{/* ══ FOOTER ══ */}
       <footer className="lp-footer">
-        <div className="lp-footer-top">
           <a href="/" className="lp-footer-logo">CUCHCO</a>
-          <div className="lp-footer-links">
-            <a href="/">Home</a><a href="/learn">Learn</a>
-            <a href="/community">Community</a><a href="/about">About</a>
-            <a href="/cube">Cube Solver</a><a href="/chess">Chess</a><a href="/code">Code</a>
+          <div className="lp-footer-socials">
+            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="lp-social" aria-label="Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L2.25 2.25h6.836l4.265 5.633L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg></a>
+            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="lp-social" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <a href="https://youtube.com" target="_blank" rel="noreferrer" className="lp-social" aria-label="YouTube"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7s-.3-2-1.2-2.7c-1.1-1.2-2.4-1.2-3-1.3C16.2 2.9 12 2.9 12 2.9s-4.2 0-6.8.2c-.6 0-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.3.7 11.5v2.1c0 2.2.3 4.4.3 4.4s.3 2 1.2 2.7c1.1 1.2 2.6 1.1 3.3 1.2C7.4 22 12 22 12 22s4.2 0 6.8-.2c.6 0 1.9-.1 3-1.3.9-.7 1.2-2.7 1.2-2.7s.3-2.2.3-4.4v-2.1C23.3 9.3 23 7 23 7zM9.7 15.5V8.4l6.6 3.6-6.6 3.5z"/></svg></a>
+            <a href="https://github.com" target="_blank" rel="noreferrer" className="lp-social" aria-label="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a>
           </div>
-        </div>
-        <div className="lp-footer-bot">
-          <span>© 2025 Cuchco — Master Your Mind</span>
-          <div className="lp-footer-discs">
-            {DISCIPLINES.map(d=><span key={d.key} style={{color:d.accent}}>{d.short}</span>)}
-          </div>
-        </div>
+          <span className="lp-footer-copy">© {new Date().getFullYear()} Cuchco. All rights reserved.</span>
       </footer>
+
     </div>
   );
 }

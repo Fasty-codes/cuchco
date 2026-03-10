@@ -1,20 +1,48 @@
+/* ── THEME TOKENS ── */
+:root{
+  --ce-bg:#0A0A0A;--ce-bg2:#111;--ce-surf:#1a1a1a;--ce-surf2:#222;
+  --ce-bd:rgba(255,255,255,0.07);--ce-bd2:rgba(255,255,255,0.12);
+  --ce-text:#f0f0f0;--ce-text2:#888;--ce-text3:#555;
+  --yellow:#FFD100;--yellow-hover:#FFE566;
+}
+[data-theme="light"]{
+  --ce-bg:#f4f3ee;--ce-bg2:#eceae3;--ce-surf:#fff;--ce-surf2:#f0efe9;
+  --ce-bd:rgba(0,0,0,0.06);--ce-bd2:rgba(0,0,0,0.12);
+  --ce-text:#111;--ce-text2:#666;--ce-text3:#aaa;
+  --yellow:#B8860B;--yellow-hover:#9A6E00;
+}
+
 /* ============================================================
    CUCHCO — CodeEditor.css
    ============================================================ */
 
-.editor-page { padding-bottom: 32px; }
+.editor-page { display:flex; flex-direction:column; height:100vh; overflow:hidden; }
 
+/* Fixed single-row header */
 .editor-header {
-  flex-wrap: wrap;
-  gap: 16px;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  background: var(--ce-bg2);
+  border-bottom: 1px solid var(--ce-bd2);
+  flex-shrink: 0;
+  overflow: hidden;
+  flex-wrap: nowrap;
 }
 
 .editor-header-controls {
-  margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
+  gap: 6px;
+  flex-wrap: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
+  margin-left: auto;
 }
 
 .template-select-wrap {
@@ -33,9 +61,9 @@
   font-family: 'Space Mono', monospace;
   font-size: 0.68rem;
   padding: 7px 12px;
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  color: var(--text);
+  background: var(--ce-surf2);
+  border: 1px solid var(--ce-bd2);
+  color: var(--ce-text);
   border-radius: 2px;
   cursor: pointer;
   outline: none;
@@ -89,7 +117,8 @@
 /* ── Editor layout ── */
 .editor-layout {
   display: grid;
-  height: calc(100vh - 165px);
+  height: calc(100vh - 52px - 28px);
+  margin-top: 52px;
 }
 .editor-layout.layout-split  { grid-template-columns: 1fr 1fr; }
 .editor-layout.layout-editor { grid-template-columns: 1fr; }
@@ -273,4 +302,34 @@
   .editor-layout.layout-split { grid-template-columns: 1fr; grid-template-rows: 1fr 1fr; }
   .editor-panel { border-right: none; border-bottom: 1px solid var(--border); }
   .editor-header-controls { width: 100%; }
+}
+.code-logo-only{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:5px;color:#FFD100;text-decoration:none;}
+
+/* ── TOPBAR ELEMENT STYLES ── */
+.ce-tb-home{
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:6px;border:1px solid var(--ce-bd2);
+  color:var(--ce-text2);text-decoration:none;transition:all .18s;flex-shrink:0;
+}
+.ce-tb-home:hover{border-color:var(--yellow);color:var(--yellow);}
+.ce-tb-divider{width:1px;height:20px;background:var(--ce-bd2);flex-shrink:0;}
+.ce-tb-brand{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:4px;color:var(--yellow);flex-shrink:0;}
+.ce-tb-slash{color:var(--ce-text3);margin:0 2px;}
+.ce-tb-title{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--ce-text2);}
+.ce-tb-back{
+  font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--ce-text2);text-decoration:none;padding:6px 12px;margin-left:4px;
+  border:1px solid var(--ce-bd2);border-radius:4px;transition:all .18s;white-space:nowrap;flex-shrink:0;
+}
+.ce-tb-back:hover{border-color:var(--yellow);color:var(--yellow);}
+.auto-run-btn{display:flex;align-items:center;gap:5px;}
+.run-btn{display:flex;align-items:center;gap:5px;}
+.copy-btn{display:flex;align-items:center;gap:5px;}
+
+/* ── RESPONSIVE HEADER FIX ── */
+@media(max-width:600px){
+  .ce-tb-title{display:none;}
+  .ce-tb-back{display:none;}
+  .ctrl-label-inline{display:none;}
+  .template-select-wrap{max-width:100px;}
 }

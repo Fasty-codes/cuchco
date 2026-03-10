@@ -1,3 +1,17 @@
+/* ── THEME VARS ── */
+:root{
+  --bg:#0a0a0a;--bg2:#111;--surface:#181818;--surface2:#222;--surface3:#2a2a2a;
+  --border:rgba(255,255,255,0.05);--border2:rgba(255,255,255,0.09);
+  --text:#f0f0f0;--text2:#999;--text3:#666;
+  --yellow:#FFD100;--red:#FF5733;--cyan:#00C4D4;--purple:#B882FF;
+}
+[data-theme="light"]{
+  --bg:#f4f3ee;--bg2:#eceae3;--surface:#fff;--surface2:#f0efe9;--surface3:#e5e4de;
+  --border:rgba(0,0,0,0.06);--border2:rgba(0,0,0,0.1);
+  --text:#111;--text2:#666;--text3:#bbb;
+  --yellow:#B8860B;--red:#c43200;--cyan:#007a85;--purple:#7c3aed;
+}
+
 /* ============================================================
    CUCHCO — CubeSolver.css
    ============================================================ */
@@ -455,4 +469,35 @@
   .face-grid-3 { grid-template-columns: repeat(3,40px); grid-template-rows:repeat(3,40px); }
   .sticker { /* size handled by face-grid */ }
   .cube-topbar { padding: 10px 16px; }
+}
+.cube-logo-only{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:5px;color:#FFD100;text-decoration:none;}
+
+/* ── NEW TOPBAR STYLES (theme-aware) ── */
+.cs-tb-home{
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:6px;border:1px solid var(--border2);
+  color:var(--text2);text-decoration:none;transition:all .18s;flex-shrink:0;
+}
+.cs-tb-home:hover{border-color:var(--yellow);color:var(--yellow);}
+.cs-tb-divider{width:1px;height:20px;background:var(--border2);}
+.cs-tb-brand{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:4px;color:var(--yellow);}
+.cs-tb-slash{color:var(--text3);margin:0 4px;}
+.cs-tb-title{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:3px;text-transform:uppercase;color:var(--text2);}
+.cs-mode-btn{
+  font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:1.5px;
+  display:flex;align-items:center;gap:6px;
+  padding:7px 14px;border:1px solid var(--border2);border-radius:5px;
+  background:none;color:var(--text2);cursor:pointer;transition:all .18s;
+}
+.cs-mode-btn:hover{border-color:var(--text2);color:var(--text);}
+.cs-mode-on{background:var(--red)!important;color:#fff!important;border-color:var(--red)!important;}
+.cs-tb-back{
+  font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:2px;
+  color:var(--text2);text-decoration:none;padding:6px 12px;
+  border:1px solid var(--border);border-radius:4px;transition:all .18s;
+}
+.cs-tb-back:hover{border-color:var(--yellow);color:var(--yellow);}
+@media(max-width:600px){
+  .cs-tb-title{display:none;}
+  .cube-topbar{gap:8px;padding:0 12px;}
 }
