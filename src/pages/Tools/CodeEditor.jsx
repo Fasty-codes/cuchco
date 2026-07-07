@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-import { FiHome, FiPlay, FiCopy, FiCheck, FiMaximize2, FiMinimize2, FiZap, FiCode, FiEye, FiColumns } from "react-icons/fi";
+import { FiHome, FiPlay, FiCopy, FiCheck, FiZap, FiCode, FiEye, FiColumns } from "react-icons/fi";
 import "./CodeEditor.css";
 
 /* ============================================================

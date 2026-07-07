@@ -22,7 +22,7 @@ const REPORT_TYPES = [
 ];
 
 export default function Report() {
-  const [theme,setTheme]=useState(()=>localStorage.getItem("cuchco-theme")||"dark");
+  const [theme]=useState(()=>localStorage.getItem("cuchco-theme")||"dark");
   useEffect(()=>{const r=theme==="system"?(window.matchMedia("(prefers-color-scheme:light)").matches?"light":"dark"):theme;document.documentElement.setAttribute("data-theme",r);},[theme]);
 
   // parse ?userId=&username= from URL
