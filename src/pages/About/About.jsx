@@ -64,34 +64,34 @@ const MEGA_ITEMS = {
    TEAM DATA
    ============================================================ */
 const TEAM = [
-  {
-    name:    "Aadhidev",
-    initial: "A",
-    role:    "Co-Founder & Lead Dev",
-    accent:  "accent-cube",
-    color:   "#FF5733",
-    bio:     "The architect behind Cuchco. Passionate about speedcubing and building tools that make learning intuitive and fun.",
-    skills:  ["React","Algorithm Design","UI/UX","Speedcubing"],
-    emoji:   "🧩",
-  },
-  {
+    {
     name:    "Steve",
     initial: "S",
-    role:    "Co-Founder & Backend",
+    role:    "Founder & CEO",
     accent:  "accent-code",
     color:   "#00C4D4",
     bio:     "Full-stack developer with a love for clean code. Keeps the backend running smooth and the data flowing fast.",
-    skills:  ["Node.js","Google Sheets API","Systems","Chess"],
+    skills:  ["React.js","Google Sheets API","Systems","CSS"],
     emoji:   "💻",
+  },
+  {
+    name:    "Aadhidev",
+    initial: "A",
+    role:    "Co-Founder & Speedcuber",
+    accent:  "accent-cube",
+    color:   "#FF5733",
+    bio:     "The architect behind Cuchco. Passionate about speedcubing and building tools that make learning intuitive and fun.",
+    skills:  ["Cubing","Algorithm Design","Ideas","Speedcubing"],
+    emoji:   "🧩",
   },
   {
     name:    "Abel",
     initial: "A",
-    role:    "Co-Founder & Design",
+    role:    "Co-Founder & Designer",
     accent:  "accent-chess",
     color:   "#B882FF",
     bio:     "Design thinker and chess strategist. Brings the visual language and user experience that makes Cuchco feel alive.",
-    skills:  ["Design","CSS","Branding","Chess Strategy"],
+    skills:  ["Design","Ideas","Branding","Chess Strategy"],
     emoji:   "♟️",
   },
 ];

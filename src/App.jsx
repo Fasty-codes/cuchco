@@ -13,6 +13,7 @@ import BeginnerCourse from "./pages/Tools/BeginnerCourse";
 import CfopCourse    from "./pages/Tools/CfopCourse";
 import ChessBoard    from "./pages/Tools/ChessBoard";
 import CodeEditor    from "./pages/Tools/CodeEditor";
+import Report        from "./pages/Community/Report";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/"                element={<Home />} />
         <Route path="/learn"           element={<Learn />} />
         <Route path="/community"       element={<Community />} />
+        <Route path="/report"          element={<Report />} />
         <Route path="/about"           element={<About />} />
         {/* Hub pages */}
         <Route path="/cube"            element={<Cube />} />
